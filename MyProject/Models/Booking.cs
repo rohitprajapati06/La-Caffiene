@@ -7,8 +7,6 @@ public partial class Booking
 {
     public int Id { get; set; }
 
-    public string UserId { get; set; } = null!;
-
     public string Name { get; set; } = null!;
 
     public int NoOfPerson { get; set; }
@@ -20,4 +18,6 @@ public partial class Booking
     public DateTime DateTime { get; set; }
 
     public string Message { get; set; } = null!;
+
+    public Guid UserId { get; set; }
 }
