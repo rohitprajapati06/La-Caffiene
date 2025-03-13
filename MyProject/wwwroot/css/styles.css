@@ -1,4 +1,10 @@
-﻿/* Hamburger Menu Icon */
+﻿/*
+
+                                   Landing Page
+*/
+
+
+/* Hamburger Menu Icon */
 .menu-icon {
     position: fixed;
     top: 20px;
@@ -100,3 +106,52 @@
         .top-icons a:hover {
             color: #ccc;
         }
+
+
+/*   About us Page   */
+
+.quote-box {
+    background-color: white;
+    padding: 20px 20px 20px 40px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    position: relative;
+    float: left; /* Align to the left */
+    width: 80%; /* Adjust the width as needed */
+    margin: 20px;
+    background-color: #eeeeee;
+}
+
+    .quote-box::before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        bottom: 20px;
+        width: 6px;
+        background-color: gray;
+    }
+
+.quote {
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.author {
+    font-weight: bold;
+    margin-top: 0;
+}
+
+.textcontainer {
+    text-align: center;
+}
+
+.chef-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    align-content:center;
+}
+
