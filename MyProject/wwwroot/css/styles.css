@@ -281,3 +281,196 @@
         left: 0%;
     }
 }
+
+
+/*  
+                            Coupon Images
+*/
+
+.hcontainer {
+    background-image: url("https://media.istockphoto.com/id/1368151405/photo/bamboo-wood-surface-with-texture-and-pattern-light-bamboo-background-for-decorating-furniture.jpg?s=612x612&w=0&k=20&c=kKHgmh8JInES6QlcTIGwHIyef4PSY9ZfJLC5KKUfSYA=");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+::selection {
+    background-color: burlywood;
+    color: black;
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.5s ease;
+    margin: 0 10px;
+}
+
+.coupon {
+    border: 2px solid #bbb;
+    border-radius: 10px;
+    background-color: transparent;
+    margin: 10px;
+    max-width: 400px;
+    flex-shrink: 0;
+}
+
+.ccontainer {
+    padding: 16px;
+}
+
+.promo {
+    background: #ccc;
+    padding: 3px;
+}
+
+.expire {
+    color: red;
+}
+
+.arrow {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    padding: 16px;
+    margin-top: -22px;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 3px;
+    user-select: none;
+}
+
+    .arrow:hover {
+        background-color: #FAEBD7;
+    }
+
+.prev {
+    left: 0;
+    background-color: #FAEBD7;
+}
+
+.next {
+    right: 0;
+    background-color: #FAEBD7;
+}
+
+/*  
+             Menu 
+    
+    /* Grid container styling */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+    margin: 0 auto; /* Center the grid container */
+}
+
+/* Grid item styling */
+.grid-item {
+    text-align: center;
+    padding: 10px;
+    background-color: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    transition: transform 0.3s ease; /* Add transition for hover effect */
+}
+
+    /* Image styling within grid items */
+    .grid-item img {
+        width: 100%;
+        height: 400px; /* Fixed height for uniform image sizing */
+        object-fit: cover; /* Ensure images cover the area without stretching */
+        border-radius: 5px;
+        border: none; /* Remove default border */
+    }
+
+    /* Hover effect on grid items */
+    .grid-item:hover {
+        transform: scale(1.05); /* Slight zoom on hover */
+    }
+
+    /* Heading (h3) styling in grid items */
+    .grid-item h3 {
+        font-size: 1.1em;
+        margin: 10px 0 5px 0;
+    }
+
+    /* Paragraph (p) styling in grid items */
+    .grid-item p {
+        font-size: 0.9em;
+        color: #666; /* Light text color for descriptions */
+    }
+
+/* Pagination container */
+.pagination {
+    text-align: center; /* Center the text inside the pagination */
+    margin-top: 20px;
+}
+
+    .pagination button {
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        background-color: bisque;
+        margin: 0 5px; /* Add horizontal margin between buttons */
+    }
+
+        .pagination button.active {
+            background-color: #FAEBD7;
+            color: black;
+        }
+
+        .pagination button:hover:not(.active) {
+            background-color: bisque;
+            color: black;
+        }
+
+/* Optional: Center the pagination container itself */
+.pagination {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the buttons within the container */
+    margin-top: 20px;
+}
+
+
+/* Tab content sections, initially hidden */
+.tab-content {
+    display: none;
+}
+
+    /* Active tab content section */
+    .tab-content.active {
+        display: block;
+    }
+
+.add-to-cart-btn {
+    background-color: transparent; /* Green background */
+    border: 1px Solid grey; /* Remove borders */
+    color: black; /* White text */
+    padding: 10px 20px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Margin around the button */
+    cursor: pointer; /* Pointer/hand icon on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+    width: 100%;
+}
+
+/* Cafe section background image styling */
+.cafe {
+    background-image: url("https://media.istockphoto.com/id/1368151405/photo/bamboo-wood-surface-with-texture-and-pattern-light-bamboo-background-for-decorating-furniture.jpg?s=612x612&w=0&k=20&c=kKHgmh8JInES6QlcTIGwHIyef4PSY9ZfJLC5KKUfSYA=");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
+
+*/

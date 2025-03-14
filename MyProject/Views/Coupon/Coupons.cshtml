@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MyProject.Models.Coupon>
+
+<div class="hcontainer">
+    <h1 Style="margin-top:20px; margin-bottom:0px; margin-left:40px; font-size:50px; font-weight:200; color:#333;">
+        <i>Winter Special Offers</i>
+    </h1>
+
+    <div class="slider" id="slider">
+        @foreach (var item in Model)
+        {
+            <div class="coupon">
+                <div class="ccontainer">
+                    <h1><i>@item.ItemName</i></h1>
+                </div>
+                <img src="~/images/@item.Image" alt="@item.ItemName" style="width:100%;" />
+                <div class="ccontainer">
+                    <h2><b>Rs.@item.Discount off your Purchase</b></h2>
+                </div>
+                <div class="ccontainer">
+                    <p>Use Promo Code: <span class="promo">@item.CouponCode</span></p>
+                    <p class="expire">Expires: @item.ExpiryDate.ToString("MMM dd, yyyy")</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <a class="arrow prev" onclick="slide(-1)">&#10094;</a>
+    <a class="arrow next" onclick="slide(1)">&#10095;</a>
+</div>
