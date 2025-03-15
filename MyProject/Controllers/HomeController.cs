@@ -12,10 +12,19 @@ namespace MyProject.Controllers
         {
             this.context = context;
         }
+
         public async Task<IActionResult> Index()
         {
-            var coupons = await context.Products.ToListAsync(); // ✅ Await the async method
-            return View(coupons);
+            var coupons = await context.Coupons.ToListAsync();
+            var products = await context.Products.ToListAsync(); // Fetch menu items
+
+            var viewModel = new HomeViewModel
+            {
+                Coupons = coupons,
+                Products = products,
+            };
+
+            return View(viewModel);
         }
 
     }

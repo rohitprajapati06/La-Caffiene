@@ -75,20 +75,3 @@
     <br />
     <br />
 </div>
-
-<!-- ✅ Fix: Move JavaScript inside a <script> tag -->
-<script>
-    function openPage(evt, pageName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].classList.remove("active");
-        }
-        tablinks = document.getElementsByClassName("pagination")[0].getElementsByTagName("button");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
-        }
-        document.getElementById(pageName).classList.add("active");
-        evt.currentTarget.classList.add("active");
-    }
-</script>

@@ -333,28 +333,48 @@
     cursor: pointer;
     position: absolute;
     top: 50%;
+    transform: translateY(-50%);
     padding: 16px;
-    margin-top: -22px;
     color: black;
     font-weight: bold;
     font-size: 18px;
     transition: 0.6s ease;
     border-radius: 3px;
     user-select: none;
+    background-color: #FAEBD7;
+    text-decoration: none; /* Removes underline */
 }
 
     .arrow:hover {
-        background-color: #FAEBD7;
+        background-color: #E0C3A0;
     }
 
 .prev {
-    left: 0;
-    background-color: #FAEBD7;
+    left: 10px;
 }
 
 .next {
-    right: 0;
-    background-color: #FAEBD7;
+    right: 10px;
+}
+
+@media (min-width: 768px) {
+    .coupon {
+        max-width: 30%;
+    }
+}
+
+/* Medium screens: Show 2 coupons */
+@media (max-width: 767px) {
+    .coupon {
+        max-width: 45%;
+    }
+}
+
+/* Small screens: Show 1 coupon */
+@media (max-width: 480px) {
+    .coupon {
+        max-width: 100%;
+    }
 }
 
 /*  
@@ -470,7 +490,23 @@
     background-size: cover;
 }
 
+@media (max-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr); /* Show 3 items per row */
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr); /* Show 2 items per row */
+    }
+}
+
+@media (max-width: 480px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* Stack items vertically */
+        width: 90%;
+    }
+}
 
 
-
-*/

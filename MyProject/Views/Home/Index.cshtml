@@ -1,5 +1,15 @@
-﻿@{
+﻿@model MyProject.Models.HomeViewModel
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div>
+    <!-- Render the Coupon partial view -->
+    @await Html.PartialAsync("Coupons", Model.Coupons)
+</div>
 
+<div>
+    <!-- Render the Menu partial view -->
+    @await Html.PartialAsync("Menu", Model.Products)
+</div>
