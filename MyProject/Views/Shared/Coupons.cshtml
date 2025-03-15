@@ -2,7 +2,7 @@
 
 <div class="hcontainer">
     <h1 Style="margin-top:20px; margin-bottom:0px; margin-left:40px; font-size:50px; font-weight:200; color:#333;">
-        <i>Winter Special Offers</i>
+        <i>Special Offers</i>
     </h1>
 
     <div class="slider" id="slider">
@@ -10,7 +10,10 @@
         {
             <div class="coupon">
                 <div class="ccontainer">
-                    <h1><i>@item.ItemName</i></h1>
+                    <h1 class="display-6 d-none d-md-block"><i>@item.ItemName</i></h1>  <!-- Visible on medium and larger screens -->
+                    <h4 class="d-block d-md-none text-truncate" style="max-width: 150px; white-space: nowrap; overflow: hidden;">
+                        <i>@item.ItemName</i>
+                    </h4>
                 </div>
                 <img src="~/images/@item.Image" alt="@item.ItemName" style="width:100%;" />
                 <div class="ccontainer">
