@@ -17,5 +17,11 @@ public partial class User
 
     public string? ProfilePhoto { get; set; }
 
+    public string? Providers { get; set; }
+
+    public string FirstName { get; set; } = null!;
+
+    public string LastName { get; set; } = null!;
+
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 }
