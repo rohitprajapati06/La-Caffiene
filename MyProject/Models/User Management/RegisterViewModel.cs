@@ -11,7 +11,7 @@ namespace MyProject.Models.User_Management
         public string LastName { get; set; }
 
         [Required]
-        public string Email { get; set; }
+        public string EmailId { get; set; }
 
         [Required, DataType(DataType.Password)]
         public string Password { get; set; }
