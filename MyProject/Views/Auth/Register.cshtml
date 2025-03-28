@@ -1,64 +1,166 @@
 ﻿@model MyProject.Models.UserRegistrationDto
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h2 class="text-center">Register</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-            @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "form-horizontal" }))
-            {
-                @Html.AntiForgeryToken()
+<style>
+    body {
+        background: linear-gradient(to right, #ff758c, #ff7eb3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Username, new { @class = "control-label" })
-                    <div>
-                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+    .register-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        max-width: 900px;
+        width: 100%;
+    }
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.EmailId, new { @class = "control-label" })
-                    <div>
-                        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.EmailId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+    .left-panel {
+        background: url('https://mir-s3-cdn-cf.behance.net/project_modules/hd/5e93ce55194677.5ab4ed9b4fb30.gif') center/cover;
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 20px;
+    }
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
-                    <div>
-                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+    .right-panel {
+        padding: 40px;
+        width: 50%;
+    }
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
-                    <div>
-                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+    .form-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
-                    <div>
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Register" class="btn btn-primary" />
-                    </div>
-                </div>
+    .form-control {
+        padding-left: 40px;
+        border-radius: 30px;
+        border: 1px solid #ddd;
+    }
+
+    .btn-register {
+        background: linear-gradient(to right, #ff758c, #ff7eb3);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 10px 20px;
+        width: 100%;
+        transition: 0.3s;
+    }
+
+        .btn-register:hover {
+            opacity: 0.8;
+        }
+
+    .social-login {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+        .social-login a {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            color: #555;
+            transition: 0.3s;
+        }
+
+            .social-login a:hover {
+                background: #ff758c;
+                color: white;
             }
 
-            <div class="text-center mt-3">
-                @Html.ActionLink("Already have an account? Login", "Login", "Auth", null, new { @class = "btn btn-link" })
+    @@media (max-width: 768px) {
+        .register-container {
+            flex-direction: column;
+        }
+
+        .left-panel {
+            width: 100%;
+            height: 200px;
+        }
+
+        .right-panel {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="register-container">
+    <div class="left-panel"></div>
+    <div class="right-panel">
+        <h2 class="text-center mb-4">Register</h2>
+
+        @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+
+
+            <div class="form-group">
+                <i class="fas fa-user-tag"></i>
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
             </div>
+
+            <div class="form-group">
+                <i class="fas fa-user-tag"></i>
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-envelope"></i>
+                @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.EmailId, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-lock"></i>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirm Password" required />
+                <span class="text-danger">@ViewData["ConfirmPasswordError"]</span>
+            </div>
+
+            <button type="submit" class="btn btn-register">Register</button>
+        }
+
+        <div class="text-center mt-3">
+            @Html.ActionLink("Already have an account? Login", "Login", "Auth", null, new { @class = "btn btn-link" })
+        </div>
+
+        <div class="social-login">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
     </div>
 </div>

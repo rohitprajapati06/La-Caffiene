@@ -39,7 +39,7 @@ namespace MyProject.Controllers
             {
                 return View(registrationDto);
             }
-
+            
             // Check if user already exists
             if (_context.Users.Any(u => u.EmailId == registrationDto.EmailId))
             {
@@ -50,11 +50,14 @@ namespace MyProject.Controllers
             var user = new User
             {
                 UserId = Guid.NewGuid(),
-                Username = registrationDto.Username,
+                Username = registrationDto.FirstName+" "+registrationDto.LastName,
                 EmailId = registrationDto.EmailId,
                 FirstName = registrationDto.FirstName,
                 LastName = registrationDto.LastName,
-                TimeStamp = DateTime.UtcNow
+                TimeStamp = DateTime.UtcNow,
+                Providers = "Local",
+                ProfilePhoto = "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg",
+
             };
 
             // Hash the password
