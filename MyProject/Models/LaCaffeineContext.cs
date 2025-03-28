@@ -86,7 +86,7 @@ public partial class LaCaffeineContext : DbContext
                 .HasColumnName("Email_id");
             entity.Property(e => e.FirstName).HasMaxLength(25);
             entity.Property(e => e.LastName).HasMaxLength(25);
-            entity.Property(e => e.Password).HasMaxLength(50);
+            entity.Property(e => e.Password).HasMaxLength(500);
             entity.Property(e => e.ProfilePhoto).HasMaxLength(500);
             entity.Property(e => e.Providers).HasMaxLength(50);
             entity.Property(e => e.TimeStamp).HasColumnType("datetime");
