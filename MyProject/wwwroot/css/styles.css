@@ -390,44 +390,43 @@
     margin: 0 auto; /* Center the grid container */
 }
 
-/* Grid item styling */
+/* Grid item */
 .grid-item {
     text-align: center;
     padding: 10px;
     background-color: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
-    transition: transform 0.3s ease; /* Add transition for hover effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
-    /* Image styling within grid items */
+    /* Image */
     .grid-item img {
         width: 100%;
-        height: 400px; /* Fixed height for uniform image sizing */
-        object-fit: cover; /* Ensure images cover the area without stretching */
+        height: 400px;
+        object-fit: cover;
         border-radius: 5px;
-        border: none; /* Remove default border */
+        border: none;
     }
 
-    /* Hover effect on grid items */
+    /* Hover effect */
     .grid-item:hover {
-        transform: scale(1.05); /* Slight zoom on hover */
+        transform: scale(1.05);
     }
 
-    /* Heading (h3) styling in grid items */
+    /* Content inside grid items */
     .grid-item h3 {
         font-size: 1.1em;
         margin: 10px 0 5px 0;
     }
 
-    /* Paragraph (p) styling in grid items */
     .grid-item p {
         font-size: 0.9em;
-        color: #666; /* Light text color for descriptions */
+        color: #666;
     }
 
-/* Pagination container */
+/* Pagination */
 .pagination {
-    text-align: center; /* Center the text inside the pagination */
+    text-align: center;
     margin-top: 20px;
 }
 
@@ -437,7 +436,7 @@
         cursor: pointer;
         font-size: 16px;
         background-color: bisque;
-        margin: 0 5px; /* Add horizontal margin between buttons */
+        margin: 0 5px;
     }
 
         .pagination button.active {
@@ -450,101 +449,97 @@
             color: black;
         }
 
-/* Optional: Center the pagination container itself */
 .pagination {
-    display: flex; /* Use flexbox for alignment */
-    justify-content: center; /* Center the buttons within the container */
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
 }
 
-
-/* Tab content sections, initially hidden */
+/* Tab content hidden by default */
 .tab-content {
     display: none;
 }
 
-    /* Active tab content section */
     .tab-content.active {
         display: block;
     }
 
+/* Add to Cart button */
 .add-to-cart-btn {
-    background-color: transparent; /* Green background */
-    border: 1px Solid grey; /* Remove borders */
-    color: black; /* White text */
-    padding: 10px 20px; /* Some padding */
-    text-align: center; /* Centered text */
-    text-decoration: none; /* Remove underline */
-    font-size: 16px; /* Increase font size */
-    margin: 4px 2px; /* Margin around the button */
-    cursor: pointer; /* Pointer/hand icon on hover */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth transition */
+    background-color: transparent;
+    border: 1px solid grey;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
     width: 100%;
 }
 
-/* Cafe section background image styling */
+/* Background styling */
 .cafe {
     background-image: url("https://media.istockphoto.com/id/1368151405/photo/bamboo-wood-surface-with-texture-and-pattern-light-bamboo-background-for-decorating-furniture.jpg?s=612x612&w=0&k=20&c=kKHgmh8JInES6QlcTIGwHIyef4PSY9ZfJLC5KKUfSYA=");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-/* Responsive design for mobile devices */
-@media (max-width: 576px) {
+/* Responsive Layout for Small Screens */
+@media (max-width: 768px) {
     .grid-container {
         display: flex;
-        flex-direction: column; /* Stack items vertically */
-        width: 100%;
+        flex-direction: column;
+        align-items: center;
     }
 
     .grid-item {
         display: flex;
-        flex-direction: row; /* Align content horizontally */
-        align-items: flex-start;
-        justify-content: space-between;
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 8px;
+        flex-direction: row; /* Ensure text is on left and image on right */
+        align-items: center;
+        background: white;
+        padding: 15px;
+        width: 90%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: left;
     }
 
-        .grid-item img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-
-        .grid-item .details {
+        /* Content (left side) */
+        .grid-item .content {
+            flex: 1;
             display: flex;
-            flex-direction: column; /* Arrange details vertically */
-            justify-content: space-between;
-            flex-grow: 1;
+            flex-direction: column; /* Stack title, description, button */
+            justify-content: center;
+            align-items: flex-start;
             padding-right: 10px;
         }
 
+        /* Image on the right */
+        .grid-item img {
+            width: 40%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
         .grid-item h3 {
-            margin: 0;
-            font-size: 1.1em;
+            font-size: 1.2em;
+            margin-bottom: 5px;
         }
 
         .grid-item p {
-            margin: 5px 0;
-            font-size: 0.9em;
+            font-size: 1em;
             color: #666;
+            margin-bottom: 10px;
         }
 
-    .price {
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-
     .add-to-cart-btn {
-        margin-top: 10px;
-        align-self: flex-start;
+        width: 95%;
+        padding: 10px;
+        font-size: 16px;
+        margin-top: 5px;
+        margin-left:5px;
     }
 }
-
-
-
