@@ -50,8 +50,11 @@
     <div class="form-group mt-3">
         <hr />
         <p class="text-center">Or sign in with:</p>
-        <a href="@Url.Action("GoogleLogin", "Auth", new { returnUrl = ViewData["ReturnUrl"] })" class="btn btn-danger btn-block">
+        <a href="@Url.Action("GoogleLogin", "Auth", new { returnUrl = ViewData["ReturnUrl"] })" class="btn btn-danger btn-block mb-2">
             <i class="fab fa-google"></i> Sign in with Google
+        </a>
+        <a href="@Url.Action("FacebookLogin", "Auth", new { returnUrl = ViewData["ReturnUrl"] })" class="btn btn-primary btn-block">
+            <i class="fab fa-facebook"></i> Sign in with Facebook
         </a>
     </div>
 </div>

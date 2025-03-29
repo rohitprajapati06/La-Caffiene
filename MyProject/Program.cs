@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddTransient<Random>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -60,6 +60,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
             }
             return Task.CompletedTask;
         };
+    })
+    .AddFacebook( options =>
+    {
+        options.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+        options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+        options.CallbackPath = "/sigin-facebook";
+
+
+        options.Fields.Add("email");
+        options.Fields.Add("name");
+        options.Fields.Add("picture.width(500).height(500)");
     });
 
 var app = builder.Build();
