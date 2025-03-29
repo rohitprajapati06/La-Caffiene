@@ -46,6 +46,14 @@
             </div>
         </div>
     </div>
+    <!-- Add this to your login form -->
+    <div class="form-group mt-3">
+        <hr />
+        <p class="text-center">Or sign in with:</p>
+        <a href="@Url.Action("GoogleLogin", "Auth", new { returnUrl = ViewData["ReturnUrl"] })" class="btn btn-danger btn-block">
+            <i class="fab fa-google"></i> Sign in with Google
+        </a>
+    </div>
 </div>
 
 @section Scripts {
