@@ -1,0 +1,27 @@
+﻿@model MyProject.Models.OtpVerificationDto
+@{
+    ViewData["Title"] = "Verify OTP";
+}
+
+<h2>Verify OTP</h2>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+@using (Html.BeginForm("VerifyOtp", "Auth", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.OtpInput, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.OtpInput, new { @class = "form-control", @required = "required" })
+        @Html.ValidationMessageFor(model => model.OtpInput, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Verify OTP</button>
+}

@@ -46,7 +46,7 @@ public class AuthController : Controller
         {
             return View(registrationDto);
         }
-        
+
         // Check if user already exists
         if (_context.Users.Any(u => u.EmailId == registrationDto.EmailId))
         {
@@ -54,17 +54,57 @@ public class AuthController : Controller
             return View(registrationDto);
         }
 
+        int otp = await otpService.GenerateOtpAsync();
+
+        // Store OTP temporarily (ideally in DB or cache)
+        TempData["Otp"] = otp.ToString();
+        TempData["UserData"] = Newtonsoft.Json.JsonConvert.SerializeObject(registrationDto);
+
+        await emailServices.SendEmailAsync(registrationDto.EmailId, "Email Confirmation", $"Your Six Digit OTP is {otp}");
+
+        return RedirectToAction("VerifyOtp", "Auth");
+    }
+
+    [HttpGet]
+    public IActionResult VerifyOtp()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> VerifyOtp(OtpVerificationDto otpDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(otpDto); // Return view with validation messages
+        }
+
+        if (TempData["Otp"] == null || TempData["UserData"] == null)
+        {
+            ModelState.AddModelError("", "OTP expired. Please register again.");
+            return RedirectToAction("Register");
+        }
+
+        string storedOtp = TempData["Otp"].ToString();
+
+        if (otpDto.OtpInput != storedOtp)
+        {
+            ModelState.AddModelError("", "Invalid OTP. Please try again.");
+            return View(otpDto);
+        }
+
+        var registrationDto = Newtonsoft.Json.JsonConvert.DeserializeObject<UserRegistrationDto>(TempData["UserData"].ToString());
+
         var user = new User
         {
             UserId = Guid.NewGuid(),
-            Username = registrationDto.FirstName+" "+registrationDto.LastName,
+            Username = registrationDto.FirstName + " " + registrationDto.LastName,
             EmailId = registrationDto.EmailId,
             FirstName = registrationDto.FirstName,
             LastName = registrationDto.LastName,
             TimeStamp = DateTime.UtcNow,
             Providers = "Local",
             ProfilePhoto = "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg",
-
         };
 
         // Hash the password
@@ -73,15 +113,11 @@ public class AuthController : Controller
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
-        int otp = await otpService.GenerateOtpAsync();
-
-        TempData["Otp"] = otp.ToString();
-
-        await emailServices.SendEmailAsync(registrationDto.EmailId, "Email Confirmation", $"Your Six Digit Otp is {otp}");
-
         TempData["SuccessMessage"] = "Registration successful. Please log in.";
         return RedirectToAction("Login", "Auth");
     }
+
+
 
     [HttpGet]
     public IActionResult Login(string? returnUrl = null)
