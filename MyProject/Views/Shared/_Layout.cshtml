@@ -90,6 +90,80 @@
     <div>
          @await Html.PartialAsync("About")
     </div>
+    <footer style="background-color: #000000; color: white; padding: 30px 0;">
+        <div class="container">
+            <div class="row">
+                <!-- Support -->
+                <div class="col-md-2">
+                    <h5>Support</h5>
+                    <ul class="list-unstyled">
+                        <li>@Html.ActionLink("FAQs", "FAQs", "Home", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Manage Reservations", "Manage", "Reservations", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Customer Service", "CustomerService", "Contact", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Safety Guidelines", "SafetyGuidelines", "Home", null, new { @class = "footer-link" })</li>
+                    </ul>
+                </div>
+
+                <!-- Discover -->
+                <div class="col-md-2">
+                    <h5>Discover</h5>
+                    <ul class="list-unstyled">
+                        <li>@Html.ActionLink("Special Offers", "Index", "Offers", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Gift Cards", "Index", "GiftCards", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Private Dining", "Index", "PrivateDining", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("View Menu", "Index", "Menu", null, new { @class = "footer-link" })</li>
+                    </ul>
+                </div>
+
+                <!-- Policies -->
+                <div class="col-md-2">
+                    <h5>Policies</h5>
+                    <ul class="list-unstyled">
+                        <li>@Html.ActionLink("Privacy Policy", "PrivacyPolicy", "Legal", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Terms & Conditions", "TermsConditions", "Legal", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Refund Policy", "RefundPolicy", "Legal", null, new { @class = "footer-link" })</li>
+                    </ul>
+                </div>
+
+                <!-- Partners -->
+                <div class="col-md-2">
+                    <h5>Partners</h5>
+                    <ul class="list-unstyled">
+                        <li>@Html.ActionLink("Franchise", "Index", "Franchise", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Become a Supplier", "Index", "Suppliers", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Affiliates", "Index", "Affiliates", null, new { @class = "footer-link" })</li>
+                    </ul>
+                </div>
+
+                <!-- About Us -->
+                <div class="col-md-2">
+                    <h5>About Us</h5>
+                    <ul class="list-unstyled">
+                        <li>@Html.Raw("<a href='/html/timeline.html' class='footer-link'>About La Caffeine</a>")</li>
+                        <li>@Html.ActionLink("Careers", "Index", "Careers", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Press", "Index", "Press", null, new { @class = "footer-link" })</li>
+                        <li>@Html.ActionLink("Contact Us", "Index", "Contact", null, new { @class = "footer-link" })</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <p>© 2025 La Caffeine. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .footer-link {
+            color: white !important;
+            text-decoration: none !important;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline !important;
+        }
+    </style>
+
 
 </body>
 </html>
