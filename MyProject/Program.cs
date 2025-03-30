@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MyProject;
 using MyProject.Models;
 using MyProject.Services;
 using MyProject.Services.Mail;
@@ -20,8 +21,11 @@ builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddTransient<IOtpService, OtpService>();
 builder.Services.AddTransient<IEmailServices, EmailServices>();
 
-builder.Services.AddDbContext<LaCaffeineContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("dbcs")));
+var provider = builder.Services.BuildServiceProvider();
+var config = provider.GetRequiredService<IConfiguration>();
+builder.Services.AddDbContext<LaCaffeineContext>(item => item.UseSqlServer(config.GetConnectionString("dbcs")));
+
+
 
 // Configure Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -88,6 +92,8 @@ app.UseRouting();
 // Add Authentication and Authorization Middleware
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<BlockAuthenticatedUserMiddleware>();
 
 // Configure default route
 app.MapControllerRoute(
