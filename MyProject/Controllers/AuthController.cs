@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyProject.Models;
 using MyProject.Services;
 using System.Security.Claims;
@@ -10,28 +11,19 @@ using System.Security.Claims;
 
 namespace MyProject.Controllers;
 
-public class AuthController : Controller
+public class AuthController(
+    LaCaffeineContext context,
+    ITokenService tokenService,
+    IPasswordHasher<User> passwordHasher,
+    IOtpService otpService,
+    IEmailServices emailServices
+        ) : Controller
 {
-    private readonly LaCaffeineContext _context;
-    private readonly ITokenService _tokenService;
-    private readonly IPasswordHasher<User> _passwordHasher;
-    private readonly IOtpService otpService;
-    private readonly IEmailServices emailServices;
-
-    public AuthController(
-        LaCaffeineContext context,
-        ITokenService tokenService,
-        IPasswordHasher<User> passwordHasher,
-        IOtpService otpService,
-        IEmailServices emailServices
-        )
-    {
-        _context = context;
-        _tokenService = tokenService;
-        _passwordHasher = passwordHasher;
-        this.otpService = otpService;
-        this.emailServices = emailServices;
-    }
+    private readonly LaCaffeineContext _context = context;
+    private readonly ITokenService _tokenService = tokenService;
+    private readonly IPasswordHasher<User> _passwordHasher = passwordHasher;
+    private readonly IOtpService otpService = otpService;
+    private readonly IEmailServices emailServices = emailServices;
 
     [HttpGet]
     public IActionResult Register()
@@ -95,23 +87,14 @@ public class AuthController : Controller
 
         var registrationDto = Newtonsoft.Json.JsonConvert.DeserializeObject<UserRegistrationDto>(TempData["UserData"].ToString());
 
-        var user = new User
-        {
-            UserId = Guid.NewGuid(),
-            Username = registrationDto.FirstName + " " + registrationDto.LastName,
-            EmailId = registrationDto.EmailId,
-            FirstName = registrationDto.FirstName,
-            LastName = registrationDto.LastName,
-            TimeStamp = DateTime.UtcNow,
-            Providers = "Local",
-            ProfilePhoto = "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg",
-        };
+        Guid userId = Guid.NewGuid();
+        string username = registrationDto.FirstName + " " + registrationDto.LastName;
+        string passwordhash = _passwordHasher.HashPassword(null, registrationDto.Password);
+        string profilephoto = "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg";
+        DateTime timestamp = DateTime.Now;
 
-        // Hash the password
-        user.Password = _passwordHasher.HashPassword(user, registrationDto.Password);
-
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
+        await _context.Database.ExecuteSqlRawAsync("EXEC RegisterUser @p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8",
+            userId , username , registrationDto.EmailId , passwordhash , timestamp , profilephoto , "Local",registrationDto.FirstName , registrationDto.LastName);
 
         TempData["SuccessMessage"] = "Registration successful. Please log in.";
         return RedirectToAction("Login", "Auth");
