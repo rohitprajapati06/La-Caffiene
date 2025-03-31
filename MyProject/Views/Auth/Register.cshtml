@@ -1,157 +1,24 @@
 ﻿@model MyProject.Models.UserRegistrationDto
 
-<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+<!-- FontAwesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-<style>
-    body {
-        background: url(https://images.unsplash.com/photo-1677155875750-9eb42b39f4e5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fDhrfGVufDB8fDR8fHwy);
-        background-size: cover;
-        min-height: 100vh;
-        background-repeat: no-repeat;
-        margin: 0;
-        padding: 20px;
-        box-sizing: border-box;
-        position: relative;
-    }
 
-    .main-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding-top: 20px;
-    }
-
-    .brand-heading {
-        position: absolute;
-        top: -30px;
-        left: 20px;
-        font-size: 36px;
-        font-weight: bold;
-        font-family: 'Lobster', cursive;
-        color: #6F4E37;
-        transform: rotate(-5deg); /* Tilt effect */
-        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
-        z-index: 10;
-    }
-
-    ::selection {
-        background-color: burlywood;
-        color: #6F4E37;
-    }
-
-    .register-container {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        display: flex;
-        max-width: 1000px;
-        width: 100%;
-        margin-top: 50px; /* Space for the brand */
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .left-panel {
-        background: url('https://mrwallpaper.com/images/hd/beige-aesthetic-coffee-latte-and-cookies-d9lxa8um7teluut8.jpg') center/cover;
-        width: 60%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-
-    .right-panel {
-        padding: 50px;
-        width: 55%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .form-group {
-        position: relative;
-        margin-bottom: 25px;
-        width: 100%;
-    }
-
-        .form-group i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6F4E37; /* Changed icon color to match brand */
-            font-size: 18px;
-        }
-
-    .form-control {
-        padding-left: 45px;
-        border-radius: 30px;
-        border: 1px solid #ddd;
-        color: black;
-        height: 45px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .btn-register {
-        background: linear-gradient(to right, #f8d9b8, #f5cda2);
-        color: black;
-        border: none;
-        border-radius: 30px;
-        padding: 12px 25px;
-        width: 100%;
-        font-weight: bold;
-        transition: 0.3s;
-        margin-top: 10px;
-    }
-
-        .btn-register:hover {
-            background: linear-gradient(to right, #f5cda2, #e6b98a);
-            opacity: 0.9;
-        }
-
-    @@media (max-width: 768px) {
-        .brand-heading {
-            position: relative;
-            top: 0;
-            left: 0;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .register-container {
-            flex-direction: column;
-            width: 100%;
-            max-width: 500px;
-            margin-top: 20px;
-        }
-
-        .left-panel {
-            width: 100%;
-            height: 200px;
-        }
-
-        .right-panel {
-            width: 100%;
-            padding: 30px;
-        }
-
-        .brand-heading {
-            font-size: 28px;
-        }
-    }
-</style>
+<!-- Custom CSS -->
+<link rel="stylesheet" href="~/css/register.css" />
 
 <div class="main-container">
-    <!-- Brand heading in top left corner -->
+    <!-- Brand heading -->
     <div class="brand-heading">
         <h1>La Caffeine</h1>
     </div>
 
-    <!-- Register container positioned below -->
+    <!-- Register container -->
     <div class="register-container">
         <div class="left-panel"></div>
         <div class="right-panel">
+            <h2 style="font-family: 'Kaushan Script', cursive; font-size: 42px; text-align: center;margin-bottom:5px; color: #6F4E37; margin: 0;">
+                Register
+            </h2>
             @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "form-horizontal" }))
             {
                 @Html.AntiForgeryToken()
@@ -192,7 +59,6 @@
             <div class="text-center mt-3">
                 @Html.ActionLink("Already have an account? Login", "Login", "Auth", null, new { @class = "btn btn-link", style = "color: #6F4E37; text-decoration: none;" })
             </div>
-
         </div>
     </div>
 </div>

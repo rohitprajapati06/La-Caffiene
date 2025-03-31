@@ -1,19 +1,39 @@
-﻿body {
-    background: url(https://previews.123rf.com/images/jagcz/jagcz1702/jagcz170200112/72245560-asian-food-served-on-white-wooden-table-top-view-space-for-text-chinese-and-vietnamese-cuisine.jpg);
+﻿@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+body {
+    background: url(https://images.unsplash.com/photo-1677155875750-9eb42b39f4e5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fDhrfGVufDB8fDR8fHwy);
     background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
 }
 
-.website-title {
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.brand-heading {
     position: absolute;
-    top: 20px;
+    top: -30px;
     left: 20px;
-    font-size: 28px;
+    font-size: 36px;
     font-weight: bold;
-    color: burlywood;
+    font-family: 'Lobster', cursive;
+    color: #6F4E37;
+    transform: rotate(-5deg); /* Tilt effect */
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+::selection {
+    background-color: burlywood;
+    color: #6F4E37;
 }
 
 .register-container {
@@ -23,23 +43,33 @@
     overflow: hidden;
     display: flex;
     max-width: 1000px;
-    width: 90%;
-    height: 550px;
+    width: 100%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .left-panel {
-    background: url('https://i.ibb.co/CNh9JDs/Untitled-design-2.png') center/cover;
-    width: 55%;
+    background: url('https://mrwallpaper.com/images/hd/beige-aesthetic-coffee-latte-and-cookies-d9lxa8um7teluut8.jpg') center/cover;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .right-panel {
     padding: 50px;
-    width: 45%;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .form-group {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    width: 100%;
 }
 
     .form-group i {
@@ -47,61 +77,52 @@
         left: 15px;
         top: 50%;
         transform: translateY(-50%);
-        color: #999;
+        color: #6F4E37;
+        font-size: 18px;
     }
 
 .form-control {
-    padding-left: 40px;
+    padding-left: 45px;
     border-radius: 30px;
     border: 1px solid #ddd;
+    color: black;
+    height: 45px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .btn-register {
-    background: burlywood;
-    color: white;
+    background: linear-gradient(to right, #f8d9b8, #f5cda2);
+    color: black;
     border: none;
     border-radius: 30px;
-    padding: 12px 20px;
+    padding: 12px 25px;
     width: 100%;
     font-weight: bold;
     transition: 0.3s;
+    margin-top: 10px;
 }
 
     .btn-register:hover {
-        background: #d4a36a;
+        background: linear-gradient(to right, #f5cda2, #e6b98a);
         opacity: 0.9;
     }
 
-.social-login {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
-}
-
-    .social-login a {
-        width: 40px;
-        height: 40px;
-        background: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-        color: #555;
-        transition: 0.3s;
+@media (max-width: 768px) {
+    .brand-heading {
+        position: relative;
+        top: 0;
+        left: 0;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 28px;
     }
 
-        .social-login a:hover {
-            background: #ff758c;
-            color: white;
-        }
-
-@media (max-width: 768px) {
     .register-container {
         flex-direction: column;
-        height: auto;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 20px;
     }
 
     .left-panel {
