@@ -1,9 +1,22 @@
 ﻿@model MyProject.Models.UserLoginDto
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h2 class="text-center">Login</h2>
+<!-- FontAwesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="~/css/login.css" />
+
+<div class="main-container">
+    <!-- Brand heading -->
+    <div class="brand-heading">
+        <h1>La Caffeine</h1>
+    </div>
+
+    <!-- Login container -->
+    <div class="login-container">
+        <div class="left-panel"></div>
+        <div class="right-panel">
+            <h2 class="login-title">Login</h2>
 
             @if (!ViewData.ModelState.IsValid)
             {
@@ -18,44 +31,45 @@
                 @Html.Hidden("ReturnUrl", (string)ViewData["ReturnUrl"])
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.EmailId, new { @class = "control-label" })
-                    <div>
-                        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.EmailId, "", new { @class = "text-danger" })
-                    </div>
+                    <i class="fas fa-envelope"></i>
+                    @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Email" })
+                    @Html.ValidationMessageFor(m => m.EmailId, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
-                    <div>
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
+                    <i class="fas fa-lock"></i>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-primary" />
-                    </div>
-                </div>
+                <button type="submit" class="btn btn-login">Log in</button>
             }
 
-            <div class="text-center mt-3">
+            <div class="text-center mt-5" style="text-decoration:none">
                 @Html.ActionLink("Forgot Password?", "ForgotPassword", "Auth", null, new { @class = "btn btn-link" })
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 @Html.ActionLink("Register as a new user", "Register", "Auth", null, new { @class = "btn btn-link" })
             </div>
+
+            <!-- Social login buttons -->
+            <div class="social-login">
+                <div class="divider">
+                    <span>or sign in with</span>
+                </div>
+                <div class="social-buttons">
+                    <!-- Facebook Login Button -->
+                    <a href="@Url.Action("FacebookLogin", "Auth", new { returnUrl = ViewData["ReturnUrl"] })" class="social-btn facebook">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" />
+                    </a>
+                    <!-- Google Login Button -->
+                    <a href="@Url.Action("GoogleLogin", "Auth", new { returnUrl = ViewData["ReturnUrl"] })" class="social-btn google">
+                        <img src="https://storage.googleapis.com/libraries-lib-production/images/GoogleLogo-canvas-404-300px.original.png" alt="Google" />
+                    </a>
+                </div>
+            </div>
+
+
         </div>
-    </div>
-    <!-- Add this to your login form -->
-    <div class="form-group mt-3">
-        <hr />
-        <p class="text-center">Or sign in with:</p>
-        <a href="@Url.Action("GoogleLogin", "Auth", new { returnUrl = ViewData["ReturnUrl"] })" class="btn btn-danger btn-block mb-2">
-            <i class="fab fa-google"></i> Sign in with Google
-        </a>
-        <a href="@Url.Action("FacebookLogin", "Auth", new { returnUrl = ViewData["ReturnUrl"] })" class="btn btn-primary btn-block">
-            <i class="fab fa-facebook"></i> Sign in with Facebook
-        </a>
     </div>
 </div>
 

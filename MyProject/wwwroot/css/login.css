@@ -1,0 +1,223 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+body {
+    background: url(https://c4.wallpaperflare.com/wallpaper/964/77/164/form-bands-light-wallpaper-preview.jpg);
+    background-size: cover;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.brand-heading {
+    position: absolute;
+    top: -30px;
+    left: 20px;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Lobster', cursive;
+    color: rebeccapurple;
+    transform: rotate(-5deg);
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+::selection {
+    background-color: mediumpurple;
+    color: rebeccapurple;
+}
+
+.login-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    max-width: 1000px;
+    width: 100%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.left-panel {
+    background: url('https://img.freepik.com/free-photo/top-view-hand-holding-ice-cream-cone_23-2149455725.jpg') center/cover;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.right-panel {
+    padding: 50px;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-title {
+    font-family: 'Kaushan Script', cursive;
+    font-size: 42px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: rebeccapurple;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+    .form-group i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rebeccapurple;
+        font-size: 18px;
+    }
+
+.form-control {
+    padding-left: 45px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    color: black;
+    height: 45px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-login {
+    background: linear-gradient(to right, #b19cd9, #d8bfd8); /* Lavender and Thistle */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 25px;
+    width: 100%;
+    font-weight: bold;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+    .btn-login:hover {
+        background: linear-gradient(to right, #9c86c7, #c4a3c4); /* Darker Lavender and Thistle */
+        opacity: 0.9;
+    }
+
+
+.btn-link {
+    color: rebeccapurple;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+    .btn-link:hover {
+        text-decoration: underline;
+        color: #5a3d2a;
+    }
+
+.social-login {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Divider with text */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: rebeccapurple;
+}
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #ccc;
+        margin: 0 10px;
+    }
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    text-decoration: none; /* Remove underline */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .social-btn img {
+        width: 35px;
+        height: 35px;
+    }
+
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.text-danger {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .brand-heading {
+        position: relative;
+        top: 0;
+        left: 0;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 28px;
+    }
+
+    .login-container {
+        flex-direction: column;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 20px;
+    }
+
+    .left-panel {
+        width: 100%;
+        height: 200px;
+    }
+
+    .right-panel {
+        width: 100%;
+        padding: 30px;
+    }
+}
