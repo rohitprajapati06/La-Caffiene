@@ -3,25 +3,122 @@
     ViewData["Title"] = "Verify OTP";
 }
 
-<h2>Verify OTP</h2>
+<!-- FontAwesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert alert-danger">
-        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-        {
-            <p>@error.ErrorMessage</p>
+<!-- Custom CSS -->
+<link rel="stylesheet" href="~/css/otp.css" />
+
+<div class="main-container">
+    <div class="brand-heading">
+        <h1>La Caffeine</h1>
+    </div>
+
+    <div class="register-container">
+        <div class="left-panel"></div>
+        <div class="right-panel">
+            <h2 class="form-title">Verify OTP</h2>
+
+            <p class="otp-message">
+                OTP has been sent to your registered email.<br /> Please enter the 6-digit OTP to verify your email.
+            </p>
+
+            <!-- Email verification icon -->
+            <div class="otp-icon-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWsMgRch2kZYG4uQQYn3sfIJvMaiWFbaO5XUFlFw7VadG-MMZzWnAEjd7NUG9Hok1eSx8&usqp=CAU"
+                     alt="Email Verification Icon" class="otp-icon">
+            </div>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+
+            @using (Html.BeginForm("VerifyOtp", "Auth", FormMethod.Post, new { @class = "form-horizontal", id = "otpForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="otp-container">
+                    @for (int i = 0; i < 6; i++)
+                    {
+                        <input type="text" class="otp-box" maxlength="1" id="otp-@i" name="OtpDigits" required />
+                    }
+                </div>
+
+                <!-- Hidden input to combine OTP values -->
+                <input type="hidden" id="otpInput" name="OtpInput" />
+
+                <button type="submit" class="btn btn-register">Verify OTP</button>
+            }
+
+            <div class="text-center mt-3">
+                @Html.ActionLink("Didn't receive OTP? Resend", "ResendOtp", "Auth", null, new { @class = "btn btn-link resend-link" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const inputs = document.querySelectorAll(".otp-box");
+        const hiddenInput = document.getElementById("otpInput");
+
+        inputs.forEach((input, index) => {
+            input.addEventListener("input", (e) => {
+                const value = e.target.value;
+
+                // Allow only numbers
+                if (!/^\d$/.test(value)) {
+                    input.value = "";
+                    return;
+                }
+
+                // Move to the next input if a digit is entered
+                if (value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+
+                updateHiddenInput();
+            });
+
+            input.addEventListener("keydown", (e) => {
+                // Move back on backspace if current input is empty
+                if (e.key === "Backspace" && index > 0 && input.value === "") {
+                    inputs[index - 1].focus();
+                }
+            });
+
+            // Handle pasting the OTP directly
+            input.addEventListener("paste", (e) => {
+                e.preventDefault();
+                const pastedData = e.clipboardData.getData("text").trim();
+
+                if (/^\d{6}$/.test(pastedData)) { // Ensure it's a 6-digit OTP
+                    pastedData.split("").forEach((digit, i) => {
+                        if (i < inputs.length) {
+                            inputs[i].value = digit;
+                        }
+                    });
+                    inputs[inputs.length - 1].focus(); // Move to last input
+                }
+                updateHiddenInput();
+            });
+        });
+
+        function updateHiddenInput() {
+            hiddenInput.value = Array.from(inputs).map(i => i.value).join("");
         }
-    </div>
-}
+    });
+</script>
 
-@using (Html.BeginForm("VerifyOtp", "Auth", FormMethod.Post))
-{
-    <div class="form-group">
-        @Html.LabelFor(model => model.OtpInput, new { @class = "form-label" })
-        @Html.TextBoxFor(model => model.OtpInput, new { @class = "form-control", @required = "required" })
-        @Html.ValidationMessageFor(model => model.OtpInput, "", new { @class = "text-danger" })
-    </div>
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-    <button type="submit" class="btn btn-primary">Verify OTP</button>
+    
 }
