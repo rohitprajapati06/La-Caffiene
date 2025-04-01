@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    var authenticationCheck = User.Identity.IsAuthenticated ? Url.Action("Profile", "Auth") : Url.Action("Register", "Auth");
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,8 +39,11 @@
     <!-- Cart and Login Icons -->
     <div class="top-icons">
         <a href="#Cart"><i class="fas fa-shopping-cart"></i></a>
-        <a href="#Login"><i class="fas fa-user"></i></a>
+        <a href="@authenticationCheck">
+            <i class="fas fa-user"></i>
+        </a>
     </div>
+
 
     <!-- Bootstrap Carousel -->
     <div id="slideshow" class="carousel slide" data-bs-ride="carousel">
