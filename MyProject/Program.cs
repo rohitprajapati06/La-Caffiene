@@ -20,6 +20,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddTransient<IOtpService, OtpService>();
 builder.Services.AddTransient<IEmailServices, EmailServices>();
+//builder.Services.AddTransient<IOrderService,OrderService>();
 
 var provider = builder.Services.BuildServiceProvider();
 var config = provider.GetRequiredService<IConfiguration>();
