@@ -6,9 +6,6 @@ namespace MyProject.Models;
 
 public partial class LaCaffeineContext : DbContext
 {
-    public LaCaffeineContext()
-    {
-    }
 
     public LaCaffeineContext(DbContextOptions<LaCaffeineContext> options)
         : base(options)
@@ -17,15 +14,16 @@ public partial class LaCaffeineContext : DbContext
 
     public virtual DbSet<Booking> Bookings { get; set; }
 
-    public virtual DbSet<Cart> Carts { get; set; }
-
     public virtual DbSet<Coupon> Coupons { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
 
+    public virtual DbSet<OrderItem> OrderItems { get; set; }
+
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,22 +37,6 @@ public partial class LaCaffeineContext : DbContext
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.NoOfPerson).HasColumnName("No of Person");
             entity.Property(e => e.UserId).HasColumnName("User_id");
-        });
-
-        modelBuilder.Entity<Cart>(entity =>
-        {
-            entity.HasKey(e => e.OrderItemId);
-
-            entity.ToTable("Cart");
-
-            entity.Property(e => e.OrderItemId).ValueGeneratedNever();
-            entity.Property(e => e.Image).HasMaxLength(500);
-            entity.Property(e => e.ProductName).HasMaxLength(50);
-
-            entity.HasOne(d => d.Order).WithMany(p => p.Carts)
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Cart_Product");
         });
 
         modelBuilder.Entity<Coupon>(entity =>
@@ -83,8 +65,6 @@ public partial class LaCaffeineContext : DbContext
                 .HasConstraintName("FK__Orders__UserId__76619304");
         });
 
-<<<<<<< HEAD
-=======
         modelBuilder.Entity<OrderItem>(entity =>
         {
             entity.HasKey(e => e.OrderItemId).HasName("PK__OrderIte__57ED06817BB5C408");
@@ -100,7 +80,6 @@ public partial class LaCaffeineContext : DbContext
                 .HasConstraintName("FK__OrderItem__Produ__7A3223E8");
         });
 
->>>>>>> cart-order-backup
         modelBuilder.Entity<Product>(entity =>
         {
             entity.ToTable("Product");

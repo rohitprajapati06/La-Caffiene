@@ -15,14 +15,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Dependency Injection
 builder.Services.AddTransient<Random>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddTransient<IOtpService, OtpService>();
 builder.Services.AddTransient<IEmailServices, EmailServices>();
-<<<<<<< HEAD
-//builder.Services.AddTransient<IOrderService,OrderService>();
-=======
+
+// Register Session services
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -30,13 +31,10 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
->>>>>>> cart-order-backup
-
+// Database Context
 var provider = builder.Services.BuildServiceProvider();
 var config = provider.GetRequiredService<IConfiguration>();
 builder.Services.AddDbContext<LaCaffeineContext>(item => item.UseSqlServer(config.GetConnectionString("dbcs")));
-
-
 
 // Configure Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -52,20 +50,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
         options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-        options.CallbackPath = "/signin-google"; // Default callback path
+        options.CallbackPath = "/signin-google";
 
-        // Ensure profile scope is added (important for retrieving profile picture)
         options.Scope.Add("profile");
         options.Scope.Add("email");
-
-        options.SaveTokens = true; // Ensures access tokens are saved
+        options.SaveTokens = true;
 
         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "sub");
         options.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
         options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
-        options.ClaimActions.MapJsonKey("urn:google:picture", "picture"); // Maps profile picture
+        options.ClaimActions.MapJsonKey("urn:google:picture", "picture");
 
-        // Custom event handler for additional claim processing
         options.Events.OnCreatingTicket = context =>
         {
             var picture = context.User.GetProperty("picture").GetString();
@@ -76,12 +71,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
             return Task.CompletedTask;
         };
     })
-    .AddFacebook( options =>
+    .AddFacebook(options =>
     {
         options.AppId = builder.Configuration["Authentication:Facebook:AppId"];
         options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
-        options.CallbackPath = "/sigin-facebook";
-
+        options.CallbackPath = "/signin-facebook";
 
         options.Fields.Add("email");
         options.Fields.Add("name");
@@ -98,12 +92,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
-// Add Authentication and Authorization Middleware
+
+app.UseSession(); // ? Must come before Authentication
+
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSession();
-
 
 app.UseMiddleware<BlockAuthenticatedUserMiddleware>();
 
@@ -112,5 +107,4 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Run the application
 app.Run();
