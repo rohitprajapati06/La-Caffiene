@@ -20,7 +20,17 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddTransient<IOtpService, OtpService>();
 builder.Services.AddTransient<IEmailServices, EmailServices>();
+<<<<<<< HEAD
 //builder.Services.AddTransient<IOrderService,OrderService>();
+=======
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+>>>>>>> cart-order-backup
 
 var provider = builder.Services.BuildServiceProvider();
 var config = provider.GetRequiredService<IConfiguration>();
@@ -89,10 +99,11 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
 // Add Authentication and Authorization Middleware
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
+
 
 app.UseMiddleware<BlockAuthenticatedUserMiddleware>();
 

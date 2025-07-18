@@ -70,22 +70,37 @@ public partial class LaCaffeineContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.ToTable("Order");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCFCE9805B0");
 
-            entity.Property(e => e.OrderId).ValueGeneratedNever();
-            entity.Property(e => e.DeliveryAddress).HasMaxLength(500);
-            entity.Property(e => e.DileveryTime).HasColumnType("datetime");
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
-            entity.Property(e => e.OrderStatus).HasMaxLength(50);
-            entity.Property(e => e.PaymentMethod).HasMaxLength(50);
-            entity.Property(e => e.PaymentStatus).HasMaxLength(50);
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .HasDefaultValue("Pending");
 
-            entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.CustomerId)
+            entity.HasOne(d => d.User).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Order_User");
+                .HasConstraintName("FK__Orders__UserId__76619304");
         });
 
+<<<<<<< HEAD
+=======
+        modelBuilder.Entity<OrderItem>(entity =>
+        {
+            entity.HasKey(e => e.OrderItemId).HasName("PK__OrderIte__57ED06817BB5C408");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__OrderItem__Order__793DFFAF");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__OrderItem__Produ__7A3223E8");
+        });
+
+>>>>>>> cart-order-backup
         modelBuilder.Entity<Product>(entity =>
         {
             entity.ToTable("Product");

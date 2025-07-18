@@ -1,0 +1,52 @@
+﻿
+@model List<MyProject.Models.CartItemViewModel>
+
+@{
+    ViewData["Title"] = "Your Cart";
+    var totalAmount = Model.Sum(i => i.Total);
+}
+
+<div class="container mt-5">
+    <h2>Your Cart</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">Your cart is empty.</div>
+    }
+    else
+    {
+        <table class="table table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price (Rs)</th>
+                    <th>Quantity</th>
+                    <th>Total (Rs)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><img src="~/images/@item.Image" width="80" /></td>
+                        <td>@item.ProductName</td>
+                        <td>@item.Price</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Total</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr class="fw-bold">
+                    <td colspan="4" class="text-end">Grand Total:</td>
+                    <td>Rs. @totalAmount</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <form asp-controller="Order" asp-action="Checkout" method="get">
+            <button type="submit" class="btn btn-success float-end">Proceed to Checkout</button>
+        </form>
+    }
+</div>
