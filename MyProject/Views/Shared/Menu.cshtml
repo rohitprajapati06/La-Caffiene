@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<MyProject.Models.Product>
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+
+@{
+    ViewData["Title"] = "Menu";
+}
 
 <div class="cafe" id="Menu">
     <br /><br />
@@ -8,15 +13,24 @@
 
     <!-- Tab 1 -->
     <div id="Grid1" class="tab-content active">
+        <input type="hidden" id="__RequestVerificationToken"
+               name="__RequestVerificationToken"
+               value="@Xsrf.GetAndStoreTokens(Context).RequestToken">
         <div class="grid-container">
             @foreach (var item in Model.Take(8)) // First 8 items
             {
                 <div class="grid-item">
-                    <img src="~/images/@item.Image" alt="@item.ProductName" /> <!-- Image First -->
+                    <img src="~/images/@item.Image" alt="@item.ProductName" />
                     <div class="content">
                         <h3>@item.ProductName</h3>
                         <p>@item.Description at just <b>Rs.@item.Price /-</b></p>
-                        <button class="add-to-cart-btn">Add to Cart</button>
+                        <button class="add-to-cart-btn"
+                                data-product-id="@item.ProductId"
+                                data-name="@item.ProductName"
+                                data-price="@item.Price"
+                                data-image="@item.Image">
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
             }
@@ -33,7 +47,13 @@
                     <div class="content">
                         <h3>@item.ProductName</h3>
                         <p>@item.Description at just <b>Rs.@item.Price /-</b></p>
-                        <button class="add-to-cart-btn">Add to Cart</button>
+                        <button class="add-to-cart-btn"
+                                data-product-id="@item.ProductId"
+                                data-name="@item.ProductName"
+                                data-price="@item.Price"
+                                data-image="@item.Image">
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
             }
@@ -50,7 +70,13 @@
                     <div class="content">
                         <h3>@item.ProductName</h3>
                         <p>@item.Description at just <b>Rs.@item.Price /-</b></p>
-                        <button class="add-to-cart-btn">Add to Cart</button>
+                        <button class="add-to-cart-btn"
+                                data-product-id="@item.ProductId"
+                                data-name="@item.ProductName"
+                                data-price="@item.Price"
+                                data-image="@item.Image">
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
             }
@@ -67,7 +93,13 @@
                     <div class="content">
                         <h3>@item.ProductName</h3>
                         <p>@item.Description at just <b>Rs.@item.Price /-</b></p>
-                        <button class="add-to-cart-btn">Add to Cart</button>
+                        <button class="add-to-cart-btn"
+                                data-product-id="@item.ProductId"
+                                data-name="@item.ProductName"
+                                data-price="@item.Price"
+                                data-image="@item.Image">
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
             }
@@ -83,3 +115,8 @@
     </div>
     <br /><br />
 </div>
+
+@section Scripts {
+    <script src="~/js/cart.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+}
