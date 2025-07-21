@@ -1,0 +1,139 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+body {
+    background: url(https://static.vecteezy.com/system/resources/previews/042/345/947/non_2x/hand-drawn-flat-design-abstract-doodle-background-vector.jpg);
+    background-size: cover;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.cart-main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.cart-brand-heading {
+    position: absolute;
+    top: -30px;
+    left: 20px;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Lobster', cursive;
+    color: Azure;
+    transform: rotate(-5deg);
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.cart-brand-heading::selection{
+    color:azure;
+    background-color:lightpink;
+}
+
+.cart-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    max-width: 1000px;
+    width: 100%;
+    margin: 50px auto 0 auto;
+}
+
+.cart-left-panel {
+    background: url('https://mrwallpaper.com/images/hd/beige-aesthetic-coffee-latte-and-cookies-d9lxa8um7teluut8.jpg') center/cover;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.cart-right-panel {
+    padding: 50px;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .cart-table th,
+    .cart-table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .cart-table th {
+        background-color: #6F4E37;
+        color: white;
+        font-weight: bold;
+    }
+
+.cart-image {
+    width: 80px;
+    border-radius: 8px;
+}
+
+.cart-grand-total {
+    font-weight: bold;
+    background-color: #f8f0e3;
+}
+
+.cart-btn-checkout {
+    background: linear-gradient(to right, #f8d9b8, #f5cda2);
+    color: black;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 25px;
+    font-weight: bold;
+    transition: 0.3s;
+    float: right;
+    margin-top: 15px;
+}
+
+    .cart-btn-checkout:hover {
+        background: linear-gradient(to right, #f5cda2, #e6b98a);
+        opacity: 0.9;
+    }
+
+@media (max-width: 768px) {
+    .cart-brand-heading {
+        position: relative;
+        top: 0;
+        left: 0;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 28px;
+    }
+
+    .cart-container {
+        flex-direction: column;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 20px;
+    }
+
+    .cart-left-panel {
+        width: 100%;
+        height: 200px;
+    }
+
+    .cart-right-panel {
+        width: 100%;
+        padding: 30px;
+    }
+}

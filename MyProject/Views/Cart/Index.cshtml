@@ -1,52 +1,72 @@
-﻿
-@model List<MyProject.Models.CartItemViewModel>
+﻿@model List<MyProject.Models.CartItemViewModel>
 
 @{
     ViewData["Title"] = "Your Cart";
     var totalAmount = Model.Sum(i => i.Total);
 }
 
-<div class="container mt-5">
-    <h2>Your Cart</h2>
+<!-- FontAwesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-    @if (!Model.Any())
-    {
-        <div class="alert alert-info">Your cart is empty.</div>
-    }
-    else
-    {
-        <table class="table table-bordered mt-3">
-            <thead class="table-dark">
-                <tr>
-                    <th>Image</th>
-                    <th>Product</th>
-                    <th>Price (Rs)</th>
-                    <th>Quantity</th>
-                    <th>Total (Rs)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td><img src="~/images/@item.Image" width="80" /></td>
-                        <td>@item.ProductName</td>
-                        <td>@item.Price</td>
-                        <td>@item.Quantity</td>
-                        <td>@item.Total</td>
-                    </tr>
-                }
-            </tbody>
-            <tfoot>
-                <tr class="fw-bold">
-                    <td colspan="4" class="text-end">Grand Total:</td>
-                    <td>Rs. @totalAmount</td>
-                </tr>
-            </tfoot>
-        </table>
+<!-- Custom Cart CSS -->
+<link rel="stylesheet" href="~/css/cart.css" />
 
-        <form asp-controller="Order" asp-action="Checkout" method="get">
-            <button type="submit" class="btn btn-success float-end">Proceed to Checkout</button>
-        </form>
-    }
+<div class="cart-main-container">
+    <!-- Brand heading -->
+    <div class="cart-brand-heading">
+        <h1>La Caffeine</h1>
+    </div>
+
+    <!-- Cart content only (no left panel) -->
+    <div class="cart-container" style="justify-content: center;">
+        <!-- Full-width content panel -->
+        <div class="cart-right-panel" style="width: 100%;">
+            <h2 style="font-family: 'Kaushan Script', cursive; font-size: 42px; text-align: center; color:lightskyblue;">
+                Your Cart
+            </h2>
+
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info mt-4 text-center">Your cart is empty.</div>
+            }
+            else
+            {
+                <div class="table-responsive mt-4">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-image"></i></th>
+                                <th><i class="fas fa-mug-hot"></i> Product</th>
+                                <th><i class="fas fa-rupee-sign"></i> Price</th>
+                                <th><i class="fas fa-sort-numeric-up-alt"></i> Qty</th>
+                                <th><i class="fas fa-calculator"></i> Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><img src="~/images/@item.Image" class="cart-image cart-image-large" /></td>
+                                    <td>@item.ProductName</td>
+                                    <td>Rs. @item.Price</td>
+                                    <td>@item.Quantity</td>
+                                    <td>Rs. @item.Total</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="cart-grand-total">
+                                <td colspan="4" class="text-end">Grand Total:</td>
+                                <td>Rs. @totalAmount</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <form asp-controller="Order" asp-action="Checkout" method="get">
+                    <button type="submit" class="cart-btn-checkout">Proceed to Checkout</button>
+                </form>
+            }
+        </div>
+    </div>
 </div>
