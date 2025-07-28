@@ -41,6 +41,17 @@
             removeItem(productId);
         }
     });
+
+    // Coupon application
+    document.getElementById('applyCouponBtn')?.addEventListener('click', applyCoupon);
+
+    // Allow pressing Enter in coupon input field
+    document.getElementById('couponCode')?.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            applyCoupon();
+        }
+    });
 });
 
 async function addToCart(productId, productName, price, image) {
@@ -190,7 +201,7 @@ async function removeItem(productId) {
                 grandTotalElement.textContent = `Rs. ${data.grandTotal}`;
             }
 
-            showToast('Item Removed ');
+            showToast('Item Removed');
 
             // If cart is empty, reload the page to show empty message
             if (data.count === 0) {
@@ -201,6 +212,73 @@ async function removeItem(productId) {
         }
     } catch (error) {
         console.error('Error:', error);
+        showToast('An error occurred. Please try again.', 'error');
+    }
+}
+
+async function applyCoupon() {
+    const couponCode = document.getElementById('couponCode').value.trim();
+    const couponMessage = document.getElementById('couponMessage');
+
+    if (!couponCode) {
+        couponMessage.textContent = 'Please enter a coupon code';
+        couponMessage.className = 'coupon-message error';
+        return;
+    }
+
+    try {
+        const token = document.querySelector('#__RequestVerificationToken').value;
+
+        const response = await fetch('/Cart/ApplyCoupon', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': token
+            },
+            body: JSON.stringify({
+                CouponCode: couponCode
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            couponMessage.textContent = data.message;
+            couponMessage.className = 'coupon-message success';
+
+            // Update the UI with new totals
+            const grandTotalElement = document.querySelector('.grand-total span:last-child');
+            if (grandTotalElement) {
+                grandTotalElement.textContent = `Rs. ${data.grandTotal}`;
+            }
+
+            // Update discount display
+            const discountElement = document.querySelector('.discount-row span:last-child');
+            if (discountElement) {
+                discountElement.textContent = `- Rs. ${data.discount}`;
+            }
+
+            // Update item display if needed
+            if (data.affectedItemId) {
+                const item = document.querySelector(`.cart-item[data-product-id="${data.affectedItemId}"]`);
+                if (item) {
+                    const subtotalElement = item.querySelector('.item-subtotal');
+                    if (subtotalElement) {
+                        subtotalElement.textContent = `Rs. ${data.itemTotal}`;
+                    }
+                }
+            }
+
+            showToast(data.message);
+        } else {
+            couponMessage.textContent = data.message;
+            couponMessage.className = 'coupon-message error';
+            showToast(data.message, 'error');
+        }
+    } catch (error) {
+        console.error('Error applying coupon:', error);
+        couponMessage.textContent = 'An error occurred. Please try again.';
+        couponMessage.className = 'coupon-message error';
         showToast('An error occurred. Please try again.', 'error');
     }
 }

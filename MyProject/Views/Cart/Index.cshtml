@@ -26,7 +26,7 @@
         <div class="cart-container">
             <div class="cart-content">
                 <h2 class="cart-title">
-                    Your Cart
+                    Your Cart&nbsp;
                 </h2>
 
                 @if (!Model.Any())
@@ -59,10 +59,29 @@
                         }
                     </div>
 
+                    <!-- Add this just above the cart-summary div -->
+                    <div class="coupon-section">
+                        <h3 style="color:hotpink;font-weight:900;font-size:21.5px">Apply Coupon</h3>
+                        <div class="coupon-input">
+                            <input type="text" id="couponCode" placeholder="Enter coupon code" />
+                            <button id="applyCouponBtn" class="cart-btn-apply">Apply</button>
+                        </div>
+                        <div id="couponMessage" class="coupon-message"></div>
+                    </div>
+
+                    <!-- Update the cart-summary div to show discounts -->
                     <div class="cart-summary">
-                        <div class="grand-total">
+                        <div class="summary-row">
+                            <span>Subtotal : </span>
+                            <span>&nbsp; Rs. @totalAmount</span>
+                        </div>
+                        <div class="summary-row discount-row">
+                            <span>Discount : </span>
+                            <span>&nbsp; Rs. @Model.Sum(i => i.Discount)</span>
+                        </div>
+                        <div class="summary-row grand-total">
                             <span>Grand Total:</span>
-                            <span>Rs. @totalAmount</span>
+                            <span>Rs. @Model.Sum(i => i.DiscountedTotal)</span>
                         </div>
                         <form asp-controller="Order" asp-action="Checkout" method="get">
                             <button type="submit" class="cart-btn-checkout">Proceed to Checkout</button>

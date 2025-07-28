@@ -15,4 +15,8 @@ public class CartItemViewModel
 
     public int Price { get; set; }
     public int Total => Price * Quantity;
+
+    public string AppliedCouponCode { get; set; } = string.Empty;
+    public int Discount { get; set; } = 0;
+    public int DiscountedTotal => Total - Discount;
 }
