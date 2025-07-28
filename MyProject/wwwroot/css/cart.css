@@ -110,6 +110,53 @@ body {
         opacity: 0.9;
     }
 
+/* Add these styles to cart.css */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+    .quantity-btn:hover {
+        background: #e0e0e0;
+    }
+
+.quantity-value {
+    margin: 0 10px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.remove-item-btn {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
+}
+
+    .remove-item-btn:hover {
+        color: #c82333;
+    }
+
+.item-total {
+    font-weight: bold;
+}
+
 @media (max-width: 768px) {
     .cart-brand-heading {
         position: relative;

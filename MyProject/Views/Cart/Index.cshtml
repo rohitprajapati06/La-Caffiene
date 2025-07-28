@@ -1,8 +1,11 @@
 ﻿@model List<MyProject.Models.CartItemViewModel>
+@using Microsoft.AspNetCore.Antiforgery
+@inject IAntiforgery Antiforgery
 
 @{
     ViewData["Title"] = "Your Cart";
     var totalAmount = Model.Sum(i => i.Total);
+    var token = Antiforgery.GetAndStoreTokens(Context).RequestToken;
 }
 
 <!-- FontAwesome for icons -->
@@ -10,6 +13,8 @@
 
 <!-- Custom Cart CSS -->
 <link rel="stylesheet" href="~/css/cart.css" />
+<body>
+    <input type="hidden" id="__RequestVerificationToken" value="@token" />
 
 <div class="cart-main-container">
     <!-- Brand heading -->
@@ -43,14 +48,26 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Modify the table row in the foreach loop -->
                             @foreach (var item in Model)
                             {
-                                <tr>
+                                <tr data-product-id="@item.ProductId">
                                     <td><img src="~/images/@item.Image" class="cart-image cart-image-large" /></td>
                                     <td>@item.ProductName</td>
                                     <td>Rs. @item.Price</td>
-                                    <td>@item.Quantity</td>
-                                    <td>Rs. @item.Total</td>
+                                    <td>
+                                        <div class="quantity-control">
+                                            <button class="quantity-btn minus" data-product-id="@item.ProductId">-</button>
+                                            <span class="quantity-value">@item.Quantity</span>
+                                            <button class="quantity-btn plus" data-product-id="@item.ProductId">+</button>
+                                        </div>
+                                    </td>
+                                    <td class="item-total">Rs. @item.Total</td>
+                                    <td>
+                                        <button class="remove-item-btn" data-product-id="@item.ProductId">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -70,3 +87,5 @@
         </div>
     </div>
 </div>
+    <script src="~/js/cart.js"></script>
+</body>
