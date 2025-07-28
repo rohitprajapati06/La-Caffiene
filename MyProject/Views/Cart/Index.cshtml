@@ -22,67 +22,52 @@
             <h1>La Caffeine</h1>
         </div>
 
-        <!-- Cart content only (no left panel) -->
-        <div class="cart-container" style="justify-content: center;">
-            <!-- Full-width content panel -->
-            <div class="cart-right-panel" style="width: 100%;">
-                <h2 style="font-family: 'Kaushan Script', cursive; font-size: 42px; text-align: center; color:lightskyblue;">
+        <!-- Cart content -->
+        <div class="cart-container">
+            <div class="cart-content">
+                <h2 class="cart-title">
                     Your Cart
                 </h2>
 
                 @if (!Model.Any())
                 {
-                    <div class="alert alert-info mt-4 text-center">Your cart is empty.</div>
+                    <div class="empty-cart">Your cart is empty.</div>
                 }
                 else
                 {
-                    <div class="table-responsive mt-4">
-                        <table class="cart-table">
-                            <thead>
-                                <tr>
-                                    <th><i class="fas fa-image"></i></th>
-                                    <th><i class="fas fa-mug-hot"></i> Product</th>
-                                    <th><i class="fas fa-rupee-sign"></i> Price</th>
-                                    <th><i class="fas fa-sort-numeric-up-alt"></i> Qty</th>
-                                    <th><i class="fas fa-calculator"></i> Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Modify the table row in the foreach loop -->
-                                @foreach (var item in Model)
-                                {
-                                    <tr data-product-id="@item.ProductId">
-                                        <td><img src="~/images/@item.Image" class="cart-image cart-image-large" /></td>
-                                        <td>@item.ProductName</td>
-                                        <td>Rs. @item.Price</td>
-                                        <td>
-                                            <div class="quantity-control">
-                                                <button class="quantity-btn minus" data-product-id="@item.ProductId">-</button>
-                                                <span class="quantity-value">@item.Quantity</span>
-                                                <button class="quantity-btn plus" data-product-id="@item.ProductId">+</button>
-                                            </div>
-                                        </td>
-                                        <td class="item-total">Rs. @item.Total</td>
-                                        <td>
-                                            <button class="remove-item-btn" data-product-id="@item.ProductId">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                            <tfoot>
-                                <tr class="cart-grand-total">
-                                    <td colspan="4" class="text-end">Grand Total:</td>
-                                    <td>Rs. @totalAmount</td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                    <div class="cart-items-container">
+                        @foreach (var item in Model)
+                        {
+                            <div class="cart-item" data-product-id="@item.ProductId">
+                                <button class="remove-item-btn" data-product-id="@item.ProductId">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <div class="item-image-container">
+                                    <img src="~/images/@item.Image" class="item-image" />
+                                </div>
+                                <div class="item-details">
+                                    <div class="item-name">@item.ProductName</div>
+                                    <div class="item-price">Rs. @item.Price</div>
+                                    <div class="quantity-control">
+                                        <button class="quantity-btn minus" data-product-id="@item.ProductId">-</button>
+                                        <span class="quantity-value">@item.Quantity</span>
+                                        <button class="quantity-btn plus" data-product-id="@item.ProductId">+</button>
+                                    </div>
+                                    <div class="item-subtotal">Rs. @item.Total</div>
+                                </div>
+                            </div>
+                        }
                     </div>
 
-                    <form asp-controller="Order" asp-action="Checkout" method="get">
-                        <button type="submit" class="cart-btn-checkout">Proceed to Checkout</button>
-                    </form>
+                    <div class="cart-summary">
+                        <div class="grand-total">
+                            <span>Grand Total:</span>
+                            <span>Rs. @totalAmount</span>
+                        </div>
+                        <form asp-controller="Order" asp-action="Checkout" method="get">
+                            <button type="submit" class="cart-btn-checkout">Proceed to Checkout</button>
+                        </form>
+                    </div>
                 }
             </div>
         </div>

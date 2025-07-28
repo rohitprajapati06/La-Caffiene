@@ -17,25 +17,25 @@
         // Quantity minus button
         if (e.target.classList.contains('minus') || e.target.closest('.minus')) {
             e.preventDefault();
-            const button = e.target.classList.contains('minus') ? 
+            const button = e.target.classList.contains('minus') ?
                 e.target : e.target.closest('.minus');
             const productId = parseInt(button.dataset.productId);
             updateQuantity(productId, -1);
         }
-        
+
         // Quantity plus button
         if (e.target.classList.contains('plus') || e.target.closest('.plus')) {
             e.preventDefault();
-            const button = e.target.classList.contains('plus') ? 
+            const button = e.target.classList.contains('plus') ?
                 e.target : e.target.closest('.plus');
             const productId = parseInt(button.dataset.productId);
             updateQuantity(productId, 1);
         }
-        
+
         // Remove item button
         if (e.target.classList.contains('remove-item-btn') || e.target.closest('.remove-item-btn')) {
             e.preventDefault();
-            const button = e.target.classList.contains('remove-item-btn') ? 
+            const button = e.target.classList.contains('remove-item-btn') ?
                 e.target : e.target.closest('.remove-item-btn');
             const productId = parseInt(button.dataset.productId);
             removeItem(productId);
@@ -94,13 +94,13 @@ async function addToCart(productId, productName, price, image) {
 
 async function updateQuantity(productId, change) {
     try {
-        const row = document.querySelector(`tr[data-product-id="${productId}"]`);
-        if (!row) {
+        const item = document.querySelector(`.cart-item[data-product-id="${productId}"]`);
+        if (!item) {
             showToast('Item not found in cart', 'error');
             return;
         }
 
-        const quantityElement = row.querySelector('.quantity-value');
+        const quantityElement = item.querySelector('.quantity-value');
         let currentQuantity = parseInt(quantityElement.textContent);
         let newQuantity = currentQuantity + change;
 
@@ -116,8 +116,8 @@ async function updateQuantity(productId, change) {
                 'RequestVerificationToken': token
             },
             body: JSON.stringify({
-                productId: productId,
-                quantity: newQuantity
+                ProductId: productId,
+                Quantity: newQuantity
             })
         });
 
@@ -132,18 +132,18 @@ async function updateQuantity(productId, change) {
             quantityElement.textContent = newQuantity;
             updateCartCount(data.count);
 
-            // Update item total
+            // Update item subtotal
             if (data.itemTotal !== undefined) {
-                row.querySelector('.item-total').textContent = `Rs. ${data.itemTotal}`;
+                item.querySelector('.item-subtotal').textContent = `Rs. ${data.itemTotal}`;
             }
 
             // Update grand total
-            const grandTotalElement = document.querySelector('.cart-grand-total td:last-child');
+            const grandTotalElement = document.querySelector('.grand-total span:last-child');
             if (grandTotalElement && data.grandTotal !== undefined) {
                 grandTotalElement.textContent = `Rs. ${data.grandTotal}`;
             }
 
-            showToast('Cart updated');
+            showToast('Cart Updated');
         } else {
             showToast(data.message || 'Failed to update cart', 'error');
             // Revert to previous quantity if update failed
@@ -166,7 +166,7 @@ async function removeItem(productId) {
                 'RequestVerificationToken': token
             },
             body: JSON.stringify({
-                productId: productId
+                ProductId: productId
             })
         });
 
@@ -177,31 +177,24 @@ async function removeItem(productId) {
         const data = await response.json();
 
         if (data.success) {
-            // Remove row from table
-            const row = document.querySelector(`tr[data-product-id="${productId}"]`);
-            if (row) row.remove();
+            // Remove item from UI
+            const item = document.querySelector(`.cart-item[data-product-id="${productId}"]`);
+            if (item) item.remove();
 
             // Update cart count
             updateCartCount(data.count);
 
             // Update grand total
-            const grandTotalElement = document.querySelector('.cart-grand-total td:last-child');
+            const grandTotalElement = document.querySelector('.grand-total span:last-child');
             if (grandTotalElement && data.grandTotal !== undefined) {
                 grandTotalElement.textContent = `Rs. ${data.grandTotal}`;
             }
 
-            showToast('Item removed from cart');
+            showToast('Item Removed ');
 
-            // If cart is empty, show empty message
+            // If cart is empty, reload the page to show empty message
             if (data.count === 0) {
-                const cartTable = document.querySelector('.cart-table');
-                if (cartTable) {
-                    const emptyMessage = document.createElement('div');
-                    emptyMessage.className = 'alert alert-info mt-4 text-center';
-                    emptyMessage.textContent = 'Your cart is empty.';
-                    cartTable.parentNode.insertBefore(emptyMessage, cartTable.nextSibling);
-                    cartTable.remove();
-                }
+                window.location.reload();
             }
         } else {
             showToast(data.message || 'Failed to remove item', 'error');
