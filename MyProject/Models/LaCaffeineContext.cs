@@ -6,6 +6,9 @@ namespace MyProject.Models;
 
 public partial class LaCaffeineContext : DbContext
 {
+    public LaCaffeineContext()
+    {
+    }
 
     public LaCaffeineContext(DbContextOptions<LaCaffeineContext> options)
         : base(options)
@@ -24,6 +27,9 @@ public partial class LaCaffeineContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=LAPTOP-38LVDR0R\\SQLEXPRESS01;Database=LaCaffeine;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -37,6 +43,11 @@ public partial class LaCaffeineContext : DbContext
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.NoOfPerson).HasColumnName("No of Person");
             entity.Property(e => e.UserId).HasColumnName("User_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Bookings)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Booking_User");
         });
 
         modelBuilder.Entity<Coupon>(entity =>

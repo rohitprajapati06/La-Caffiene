@@ -23,5 +23,7 @@ public partial class User
 
     public string LastName { get; set; } = null!;
 
+    public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

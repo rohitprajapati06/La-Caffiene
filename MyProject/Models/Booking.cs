@@ -20,4 +20,6 @@ public partial class Booking
     public string Message { get; set; } = null!;
 
     public Guid UserId { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }
