@@ -13,3 +13,9 @@
     <!-- Render the Menu partial view -->
     @await Html.PartialAsync("Menu", Model.Products)
 </div>
+
+<div class="booking-section">
+    @{
+        await Html.RenderPartialAsync("~/Views/Booking/Create.cshtml", new MyProject.Models.BookingDto());
+    }
+</div>
