@@ -1,0 +1,81 @@
+﻿@using MyProject.Models
+
+@{
+    ViewData["Title"] = "Checkout";
+    var grandTotal = (int)ViewBag.GrandTotal;
+}
+
+<h2>Review & Pay</h2>
+
+<table>
+    <thead>
+        <tr><th>Item</th><th>Qty</th><th>Total</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (List<CartItemViewModel>)ViewBag.CartItems)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>₹@(item.DiscountedTotal > 0 ? item.DiscountedTotal : item.Total)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p><strong>Grand Total:</strong> ₹@grandTotal</p>
+
+<form id="payment-form">
+    @Html.AntiForgeryToken()
+    <button type="button" onclick="payNow()">Pay with Razorpay</button>
+</form>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    function payNow() {
+        fetch('/Payment/CreateRazorpayOrder', {
+            method: 'POST',
+            headers: { 'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success) return alert(data.message);
+
+            const options = {
+                key: data.key,
+                amount: data.amount,
+                currency: "INR",
+                name: "TourNest",
+                description: "Order Payment",
+                order_id: data.orderId,
+                handler: function (response) {
+                    savePayment(response);
+                },
+                prefill: {
+                    email: "user@example.com",
+                    contact: "9999999999"
+                },
+                theme: { color: "#F37254" }
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.open();
+        });
+    }
+
+    function savePayment(response) {
+        fetch('/Payment/SaveOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+            },
+            body: JSON.stringify(response)
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.message);
+            if (data.success) window.location.href = '/Payment/Success';
+        });
+    }
+</script>

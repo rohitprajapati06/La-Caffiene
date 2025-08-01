@@ -202,6 +202,7 @@ body {
     .cart-btn-checkout:hover {
         background: linear-gradient(to right, #f5cda2, #e6b98a);
         opacity: 0.9;
+        background-color:bisque;
     }
 
 /* Toast notifications */

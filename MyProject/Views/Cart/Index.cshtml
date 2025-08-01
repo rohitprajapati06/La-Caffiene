@@ -83,8 +83,9 @@
                             <span>Grand Total:</span>
                             <span>Rs. @Model.Sum(i => i.DiscountedTotal)</span>
                         </div>
-                        <form asp-controller="Order" asp-action="Checkout" method="get">
-                            <button type="submit" class="cart-btn-checkout">Proceed to Checkout</button>
+                        <form id="paymentForm" method="post" asp-controller="Payment" asp-action="CreateRazorpayOrder">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="cart-btn-checkout">Proceed to Payment</button>
                         </form>
                     </div>
                 }
@@ -92,4 +93,56 @@
         </div>
     </div>
     <script src="~/js/cart.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+               document.getElementById("paymentForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            const response = await fetch('/Payment/CreateRazorpayOrder', {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': token
+                }
+            });
+
+            const result = await response.json();
+            if (!result.success) return alert(result.message);
+
+            const options = {
+                key: result.key,
+                amount: result.amount,
+                currency: "INR",
+                name: "LaCaffeine",
+                description: "Order Payment",
+                order_id: result.orderId,
+                handler: function (response) {
+                    fetch('/Payment/SaveOrder', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': token
+                        },
+                        body: JSON.stringify({
+                            razorpayPaymentId: response.razorpay_payment_id,
+                            razorpayOrderId: response.razorpay_order_id,
+                            razorpaySignature: response.razorpay_signature
+                        })
+                    }).then(res => res.json())
+                      .then(data => {
+                          if (data.success) {
+                              window.location.href = "/Payment/Success";
+                          } else {
+                              alert(data.message);
+                          }
+                      });
+                },
+                theme: {
+                    color: "#3399cc"
+                }
+            };
+            const rzp = new Razorpay(options);
+            rzp.open();
+        });
+    </script>
 </body>

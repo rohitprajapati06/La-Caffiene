@@ -23,6 +23,7 @@ builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddTransient<IOtpService, OtpService>();
 builder.Services.AddTransient<IEmailServices, EmailServices>();
 builder.Services.AddScoped<IEmailServices, EmailServices>();
+builder.Services.AddScoped<PaymentService>();
 
 // Register Session services
 builder.Services.AddSession(options =>

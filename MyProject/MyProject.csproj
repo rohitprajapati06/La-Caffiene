@@ -26,6 +26,8 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.7.0" />
 
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+
+	  <PackageReference Include="RazorPay.Core" Version="1.0.2" />
   </ItemGroup>
 
 </Project>
