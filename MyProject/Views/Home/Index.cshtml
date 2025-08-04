@@ -14,7 +14,7 @@
     @await Html.PartialAsync("Menu", Model.Products)
 </div>
 
-<div class="booking-section">
+<div class="booking-section" id="BookTable">
     @{
         await Html.RenderPartialAsync("~/Views/Booking/Create.cshtml", new MyProject.Models.BookingDto());
     }
