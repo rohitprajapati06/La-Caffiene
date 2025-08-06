@@ -170,7 +170,7 @@ public class AuthController(
     }
 
     [Authorize]
-    public IActionResult Profile()
+    public async Task<IActionResult> Profile()
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -185,6 +185,21 @@ public class AuthController(
         {
             return RedirectToAction("Login");
         }
+
+        // Get user's bookings
+        var bookings = await _context.Bookings
+            .Where(b => b.UserId == Guid.Parse(userId))
+            .ToListAsync();
+
+        // Get user's orders
+        var orders = await _context.Orders
+            .Include(o => o.OrderItems)
+            .ThenInclude(oi => oi.Product)
+            .Where(o => o.UserId == Guid.Parse(userId))
+            .ToListAsync();
+
+        ViewBag.Bookings = bookings;
+        ViewBag.Orders = orders;
 
         return View(user);
     }

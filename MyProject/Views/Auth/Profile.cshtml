@@ -1,228 +1,13 @@
-﻿@model MyProject.Models.User
+﻿@using MyProject.Models
+@model MyProject.Models.User
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: "Lato", sans-serif;
-        background-color: #121212;
-        color: #e0e0e0;
-    }
-
-    .container {
-        background-color: #1e1e1e;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        margin-top: 30px;
-    }
-
-    .profile-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #333;
-    }
-
-    .profile-picture {
-        width: 140px;
-        height: 140px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 30px;
-        border: 4px solid #444;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .profile-info {
-        flex-grow: 1;
-        display: flex;
-        align-items: center;
-    }
-
-    .profile-text {
-        flex: 2;
-    }
-
-    .quote-action-container {
-        flex : 4;
-        display: flex;
-        align-items: center;
-        width: 100%;
-    }
-
-    .profile-quote-container {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 120px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .profile-quote {
-        font-family: 'Playfair Display', serif;
-        font-size: 28px;
-        color: #f8b195;
-        text-align: left;
-        font-style: italic;
-        padding: 20px;
-        border-left: 2px solid #444;
-        line-height: 1.4;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        position: absolute;
-        width: 100%;
-        opacity: 0;
-        transition: all 0.8s ease-in-out;
-        transform: translateY(20px);
-    }
-
-        .profile-quote.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-    .menu-redirect-btn {
-        background-color: #f8b195;
-        color: #121212;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top : 40px;
-        transition: all 0.3s ease;
-        white-space: nowrap;
-        margin-right:60px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-        .menu-redirect-btn:hover {
-            background-color: burlywood;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .menu-redirect-btn i {
-            margin-left: 5px;
-        }
-
-    .profile-name {
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 8px;
-        color: #ffffff;
-    }
-
-    .profile-email {
-        color: #aaaaaa;
-        margin-bottom: 10px;
-        font-size: 16px;
-    }
-
-    .profile-meta {
-        color: #888;
-        font-size: 14px;
-    }
-
-    /* Style the tab */
-    .tab {
-        float: left;
-        border: 1px solid #333;
-        background-color: #252525;
-        width: 20%;
-        min-height: 430px;
-        border-radius: 5px 0 0 5px;
-        margin-top:40px;
-    }
-
-        /* Style the buttons inside the tab */
-        .tab button {
-            display: block;
-            background-color: inherit;
-            color: #e0e0e0;
-            padding: 22px 16px;
-            width: 100%;
-            border: none;
-            outline: none;
-            text-align: left;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 17px;
-            border-bottom: 1px solid #333;
-        }
-
-            /* Change background color of buttons on hover */
-            .tab button:hover {
-                background-color: #333;
-            }
-
-            /* Create an active/current "tab button" class */
-            .tab button.active {
-                background-color: #444;
-                color: #f8b195;
-            }
-
-    /* Style the tab content */
-    .tabcontent {
-        float: left;
-        padding: 30px;
-        border: 1px solid #333;
-        width: 80%;
-        border-left: none;
-        min-height: 430px;
-        background-color: #252525;
-        border-radius: 0 5px 5px 0;
-        margin-top:40px;
-        
-    }
-
-        .tabcontent h3 {
-            color: #f8b195;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .tabcontent p {
-            color: #cccccc;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-    .logout-btn {
-        background-color: #d9534f;
-        color: white !important;
-        margin-top: auto;
-        border-top: 1px solid #333;
-        font-weight: bold;
-        text-align: center;
-    }
-
-        .logout-btn:hover {
-            background-color: #c9302c;
-        }
-
-    @@keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
+<link rel="stylesheet" href="~/css/profile.css" />
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <!-- Profile Header Section -->
+            <!-- Profile Header -->
             <div class="profile-header">
                 <img src="@(Model.ProfilePhoto ?? "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg")"
                      alt="Profile Picture" class="profile-picture">
@@ -237,7 +22,7 @@
                     </div>
                     <div class="quote-action-container">
                         <div class="profile-quote-container" id="quoteContainer">
-                            <!-- Quotes will be inserted here by JavaScript -->
+                            <!-- Quotes will be inserted by JavaScript -->
                         </div>
                         <button class="menu-redirect-btn" id="menuRedirectBtn">
                             Order Now <i class="fas fa-arrow-right"></i>
@@ -246,162 +31,138 @@
                 </div>
             </div>
 
-            <!-- Vertical Tabs -->
+            <!-- Tabs -->
             <div class="tab">
                 <button class="tablinks" onclick="openTab(event, 'Tab1')" id="defaultOpen">Edit Profile</button>
                 <button class="tablinks" onclick="openTab(event, 'Tab2')">My Bookings</button>
                 <button class="tablinks" onclick="openTab(event, 'Tab3')">My Orders</button>
-                @using (Html.BeginForm("Logout", "Auth", FormMethod.Post, new { id = "logoutForm" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="tablinks logout-btn">Logout</button>
-                }
+                <button type="button" class="tablinks logout-btn" onclick="showLogoutModal()">Logout</button>
             </div>
 
-            <!-- Tab Contents -->
+            <!-- Logout Confirmation Modal -->
+            <div id="logoutModal" class="modal-overlay" style="display:none;">
+                <div class="modal-content">
+                    <p>Are you sure you want to logout?</p>
+                    <form method="post" action="/Auth/Logout" id="logoutForm">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                        <button type="button" class="btn btn-secondary" onclick="hideLogoutModal()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tab Content -->
             <div id="Tab1" class="tabcontent">
                 <h3>Profile Information</h3>
                 <p>Your profile details will appear here.</p>
             </div>
 
             <div id="Tab2" class="tabcontent">
-                <h3>My Bookings</h3>
-                <p>Your booking history will appear here.</p>
+                <h3 class="booking-title">My Bookings</h3>
+                @if (ViewBag.Bookings == null || ((List<Booking>)ViewBag.Bookings).Count == 0)
+                {
+                    <p class="no-bookings">No bookings found.</p>
+                }
+                else
+                {
+                    <div class="card-grid">
+                        @foreach (var booking in (List<Booking>)ViewBag.Bookings)
+                        {
+                            <div class="card">
+                                <img src="@(
+                                    booking.NoOfPerson == 2 ?
+                                    "https://www.gharnish.com/cdn/shop/files/Heera2seaterrestaurantdiningsetImportersInIndia.jpg?v=1710355669" :
+                                    booking.NoOfPerson == 3 ?
+                                    "https://i.pinimg.com/474x/bc/1f/55/bc1f55b526099619330d7eb232439d1b.jpg" :
+                                    booking.NoOfPerson == 4 ?
+                                    "https://image.made-in-china.com/2f0j00WjDlyiJcrvzt/Nordic-Plastic-Wood-Outdoor-Table-and-Chairs-Cafe-Restaurant-Outdoor-One-Table-and-4-Chairs.webp" :
+                                    "https://www.homesrus.ae/media/catalog/product/5/1/5121200102358_l.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=840&width=840&canvas=840:840"
+                                )" alt="Booking Image" />
+
+                                <h2>@booking.Name</h2>
+                                <p class="title">@booking.Mail</p>
+                                <p><i class="fa fa-phone"></i> @booking.Phone</p>
+                                <p><i class="fa fa-calendar"></i> @booking.DateTime.ToString("f")</p>
+                                <p><strong>Guests:</strong> @booking.NoOfPerson</p>
+                                <p><strong>Message:</strong> @booking.Message</p>
+
+                                <div class="social-icons">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                                    <a href="#"><i class="fa fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
             </div>
 
             <div id="Tab3" class="tabcontent">
-                <h3>My Orders</h3>
-                <p>Your order history will appear here.</p>
+                <h3 class="orders-title">My Orders</h3>
+                @if (ViewBag.Orders == null || ((List<Order>)ViewBag.Orders).Count == 0)
+                {
+                    <p class="no-orders">No orders found.</p>
+                }
+                else
+                {
+                    foreach (var order in (List<Order>)ViewBag.Orders)
+                    {
+                        <div class="order-container">
+                            <p style="font-size:30px;"><strong> #@order.OrderId </strong></p>
+                            <p><strong>Date:</strong> @order.OrderDate.ToString("f")</p>
+                            <p><strong>Total:</strong> ₹@order.TotalAmount</p>
+                            <p style="color:burlywood;"><strong style="color:white;">Status:</strong> @order.Status</p>
+
+                            <ul class="order-items">
+                                @foreach (var item in order.OrderItems)
+                                {
+                                    <li class="order-item">
+                                        <img src="@Url.Content("~/images/" + (string.IsNullOrEmpty(item.Product?.Image) ? "default.png" : item.Product.Image))"
+                                             alt="Product Image" />
+                                        <div class="order-item-details">
+                                            <div><strong>Product:</strong> @Html.DisplayFor(modelItem => item.Product.ProductName)</div>
+                                            <div><strong>Qty:</strong> @item.Quantity</div>
+                                            <div><strong>Price:</strong> ₹@item.Price</div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                }
             </div>
         </div>
     </div>
 </div>
 
+<!-- Optional: Modal CSS -->
+
+<!-- JavaScript for Tab + Logout Modal -->
 <script>
-    // Time-based quotes
-    const timeQuotes = {
-        morning: [
-            "Start your day deliciously—breakfast served hot and fresh!",
-            "Breakfast: The secret ingredient to a brighter morning.",
-            "Wake up, eat well, and conquer your day."
-        ],
-        afternoon: [
-            "Sip, savor, and unwind—afternoon delights await.",
-            "Refresh your senses with our signature drinks.",
-            "Cheers to afternoons filled with great flavors and good company."
-        ],
-        evening: [
-            "Evenings made better with tasty bites and good times.",
-            "Snack o'clock: indulge, relax, repeat.",
-            "Perfect snacks for those sunset cravings."
-        ],
-        night: [
-            "End your day with a feast—dinner done right.",
-            "Savor the night, one delicious bite at a time.",
-            "Dinner is not just a meal, it's an experience."
-        ]
-    };
-
-    // Function to get current time period
-    function getTimePeriod() {
-        const hour = new Date().getHours();
-        if (hour >= 5 && hour < 12) return 'morning';
-        if (hour >= 12 && hour < 17) return 'afternoon';
-        if (hour >= 17 && hour < 21) return 'evening';
-        return 'night';
-    }
-
-    // Function to get appropriate grid based on time
-    function getTimeBasedGrid() {
-        const hour = new Date().getHours();
-        if (hour >= 5 && hour < 12) return 'Grid1';   // Morning
-        if (hour >= 12 && hour < 17) return 'Grid2';  // Afternoon
-        if (hour >= 17 && hour < 21) return 'Grid3';  // Evening
-        return 'Grid4';                               // Night
-    }
-
-    // Function to rotate quotes
-    function rotateQuotes() {
-        const period = getTimePeriod();
-        const quotes = timeQuotes[period];
-        const container = document.getElementById('quoteContainer');
-
-        // Clear existing quotes
-        container.innerHTML = '';
-
-        // Create quote elements
-        quotes.forEach((quote, index) => {
-            const quoteElement = document.createElement('div');
-            quoteElement.className = 'profile-quote';
-            quoteElement.textContent = quote;
-            quoteElement.style.display = index === 0 ? 'block' : 'none';
-            quoteElement.style.opacity = index === 0 ? '1' : '0';
-            container.appendChild(quoteElement);
-        });
-
-        // Start rotation
-        let currentIndex = 0;
-        const quoteElements = container.getElementsByClassName('profile-quote');
-
-        setInterval(() => {
-            // Fade out current quote
-            quoteElements[currentIndex].style.opacity = '0';
-            quoteElements[currentIndex].style.display = 'none';
-
-            // Move to next quote
-            currentIndex = (currentIndex + 1) % quotes.length;
-
-            // Fade in next quote
-            setTimeout(() => {
-                quoteElements[currentIndex].style.display = 'block';
-                setTimeout(() => {
-                    quoteElements[currentIndex].style.opacity = '1';
-                }, 50);
-            }, 800);
-        }, 3000);
-    }
-
     function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none";
         }
+
         tablinks = document.getElementsByClassName("tablinks");
         for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
+            tablinks[i].classList.remove("active");
         }
-        document.getElementById(tabName).style.display = "block";
 
-        // Don't add 'active' class to logout button
-        if (evt.currentTarget.type !== 'submit') {
-            evt.currentTarget.className += " active";
-        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.classList.add("active");
     }
 
-    // Initialize when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        rotateQuotes();
-        document.getElementById("defaultOpen").click();
+    document.getElementById("defaultOpen").click();
 
-        // Update button text based on time
-        const period = getTimePeriod();
-        const btn = document.getElementById('menuRedirectBtn');
-        if (period === 'morning') {
-            btn.textContent = 'Breakfast Menu';
-        } else if (period === 'afternoon') {
-            btn.textContent = 'Lunch Menu';
-        } else if (period === 'evening') {
-            btn.textContent = 'Dinner Menu';
-        } else {
-            btn.textContent = 'Late Night Menu';
-        }
-        btn.innerHTML += ' <i class="fas fa-arrow-right"></i>';
+    function showLogoutModal() {
+        document.getElementById("logoutModal").style.display = "flex";
+    }
 
-        // Add click event for menu redirect
-        btn.addEventListener('click', function() {
-            const grid = getTimeBasedGrid();
-            window.location.href = '/#Menu' ;
-        });
-    });
+    function hideLogoutModal() {
+        document.getElementById("logoutModal").style.display = "none";
+    }
 </script>
